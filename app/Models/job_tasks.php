@@ -9,6 +9,6 @@ class job_tasks extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['job_id','info'];
+    protected $fillable = ['job_id','task_id'];
 
 }

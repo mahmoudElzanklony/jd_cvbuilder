@@ -16,7 +16,8 @@ class CreateJobTasksTable extends Migration
         Schema::create('job_tasks', function (Blueprint $table) {
             $table->id();
             $table->foreignId('job_id')->constrained('jobs')->onUpdate('cascade')->onDelete('cascade');
-            $table->text('info');
+            $table->foreignId('task_id')->constrained('tasks')->onUpdate('cascade')->onDelete('cascade');
+
             $table->timestamps();
         });
     }

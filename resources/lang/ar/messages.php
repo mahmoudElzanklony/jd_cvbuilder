@@ -14,4 +14,5 @@ return [
   'email_sent_successfully'=>'تم ارسال لك رساله علي البريد الالكتروني',
   'payment_success'=>'تمت عملية الدفع بنجاح',
   'operation_done_successfully'=>'تمت العملية بنجاح',
+  'created_successfully'=>'تمت عملية الاضافة بنجاح',
 ];

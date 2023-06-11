@@ -1,6 +1,7 @@
 <?php
 return [
     'required' => ' :attribute  حقل ادخال مطلوب',
+    'filled' => ' :attribute  لابد ان يحتوي علي قيمة',
     'confirmed' => ':attribute غير متوافقتان',
     'unique' => ':attribute مأخوذ بالفعل',
     'exists' => ':attribute غير موجود',

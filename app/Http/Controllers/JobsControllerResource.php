@@ -12,9 +12,9 @@ use App\Models\job_abilities;
 use App\Models\job_knowledage;
 use App\Models\job_tasks;
 use App\Models\jobs;
-use App\Models\jobs_certificates;
-use App\Models\jobs_educations;
-use App\Models\jobs_work_context;
+use App\Models\job_certificates;
+use App\Models\job_educations;
+use App\Models\job_work_context;
 use App\Models\roles;
 use App\Models\skills_jobs;
 use Illuminate\Http\Request;
@@ -60,11 +60,11 @@ class JobsControllerResource extends Controller
             return !is_array($value);
         });
         $job->save_job(HandleMultiLangData::handle_data($job_data))
-            ->save_data_model($data['job_certificates'],jobs_certificates::class)
+            ->save_data_model($data['job_certificates'],job_certificates::class)
             ->save_data_model($data['job_abilities'],job_abilities::class)
             ->save_data_model($data['job_knowledage'],job_knowledage::class)
-            ->save_data_model($data['job_educations'],jobs_educations::class)
-            ->save_data_model($data['job_work_context'],jobs_work_context::class)
+            ->save_data_model($data['job_educations'],job_educations::class)
+            ->save_data_model($data['job_work_context'],job_work_context::class)
             ->save_data_model($data['job_tasks'],job_tasks::class)
             ->save_data_model($data['skills_jobs'],skills_jobs::class);
         return messages::success_output(trans('messages.operation_done_successfully'));

@@ -15,8 +15,10 @@ class CreateWorkContextsTable extends Migration
     {
         Schema::create('work_contexts', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->longText('description');
+            $table->string('ar_title');
+            $table->string('en_title');
+            $table->longText('ar_desc');
+            $table->longText('en_desc');
             $table->text('note');
             $table->timestamps();
             $table->softDeletes();

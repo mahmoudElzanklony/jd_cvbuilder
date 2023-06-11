@@ -9,6 +9,6 @@ class job_knowledage extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['job_id','info'];
+    protected $fillable = ['job_id','knowledge_id'];
 
 }

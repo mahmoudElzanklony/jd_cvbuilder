@@ -13,6 +13,10 @@ return [
     'missing_info'=>'missing info for this request',
     'not_enough_points_to_pay_for_this_listing'=>'Not enough points to pay for this listing',
     'not_completed'=>'Not completed',
+    'there_is_no_data_to_preview'=>'There is no data to preview',
+    'ops_something_wrong'=>'Ops. there is something wrong in your request',
+
+
 
 
 ];

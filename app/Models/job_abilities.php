@@ -9,5 +9,5 @@ class job_abilities extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['job_id','info'];
+    protected $fillable = ['job_id','ability_id'];
 }

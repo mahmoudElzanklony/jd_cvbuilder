@@ -15,7 +15,7 @@ class jobs extends Model
         ,'contract_renewable','years_experience','min_salary','max_salary','career_path'];
 
     public function certificates(){
-        return $this->hasMany(jobs_certificates::class,'job_id');
+        return $this->hasMany(job_certificates::class,'job_id');
     }
 
     public function abilities(){
@@ -27,11 +27,11 @@ class jobs extends Model
     }
 
     public function educations(){
-        return $this->hasMany(jobs_educations::class,'job_id');
+        return $this->hasMany(job_educations::class,'job_id');
     }
 
     public function work_context(){
-        return $this->hasMany(jobs_work_context::class,'job_id');
+        return $this->hasMany(job_work_context::class,'job_id');
     }
 
     public function skills(){

@@ -16,7 +16,8 @@ class CreateJobAbilitiesTable extends Migration
         Schema::create('job_abilities', function (Blueprint $table) {
             $table->id();
             $table->foreignId('job_id')->constrained('jobs')->onUpdate('cascade')->onDelete('cascade');
-            $table->text('info');
+            $table->foreignId('ability_id')->constrained('abilities')->onUpdate('cascade')->onDelete('cascade');
+
             $table->timestamps();
         });
     }
