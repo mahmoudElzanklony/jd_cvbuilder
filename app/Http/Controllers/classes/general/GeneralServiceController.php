@@ -16,22 +16,15 @@ class GeneralServiceController extends Controller
     public function delete_item(){
         $table = request('table');
         $id = request('id');
-        if($table == 'listings_infos'){
-            $l = listings_info::query()->find($id);
-            $l->type = 'deleted_at';
-            $l->save();
-            listings_info::query()->find($id)->delete();
-        }else if($table == 'countries' || $table == 'governments' || $table == 'cities' || $table == 'areas'){
-            $item = advertising_points_price::query()->where('type','=',$table)
-                ->where('place_id','=',$id)->first();
-            if($item != null){
-                $item->delete();
-            }
-            DB::table($table)->delete($id);
+        if(request()->has('model')){
+            $model =  '\\App\\Models\\'.request('model');
+            $model = new $model();
+            $model->where('id',$id)->delete();
+            return messages::success_output([trans('messages.deleted_successfully')]);
         } else {
             DB::table($table)->delete($id);
         }
-        return messages::success_output([trans('messages.deleted_successfully')]);
+
     }
 
 

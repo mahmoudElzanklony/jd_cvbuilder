@@ -16,8 +16,8 @@ class JobCertificatesResource extends JsonResource
     {
         return [
           'id'=>$this->id,
-          'job_id'=>$this->job_id,
-          'name'=>$this->name,
+          'title'=>$this->{app()->getLocale().'_title'},
+          'description'=>$this->{app()->getLocale().'_desc'},
           'image'=>$this->image,
           'created_at'=>$this->created_at->format('Y m d, h:i A'),
         ];

@@ -16,11 +16,14 @@ class SkillsResource extends JsonResource
     {
         return [
           'id'=>$this->id,
-          'sk_group_id'=>$this->sk_group_id,
           'title'=>$this->{app()->getLocale().'_title'},
-          'desc'=>$this->{app()->getLocale().'_desc'},
+          'description'=>$this->{app()->getLocale().'_desc'},
           'note'=>$this->note,
-          'sk_group'=>TitleDescResource::make($this->whenLoaded('sk_group')),
+          'sk_group'=>TitleDescResource::make($this->whenLoaded('sk_group'))            /*'sk_group_id'=>$this->sk_group_id,
+            'title'=>$this->{app()->getLocale().'_title'},
+            'desc'=>$this->{app()->getLocale().'_desc'},
+            'note'=>$this->note,
+            'sk_group'=>TitleDescResource::make($this->whenLoaded('sk_group')),*/
         ];
     }
 }

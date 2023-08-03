@@ -14,6 +14,10 @@ class FilterRequest
             return $next($request);
         }
 
+        if (! request()->filled($filter)) {
+            return $next($request);
+        }
+
         return $next($request)->when($filter != '' && strpos($filter, 'date') == false,
             function ($q) use ($filter){
           $q->where($filter,'LIKE', '%'.request()->input($filter).'%');

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class job_knowledage extends Model
 {
+    protected $table = 'job_knowledge';
     use HasFactory;
 
     protected $fillable = ['job_id','knowledge_id'];

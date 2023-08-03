@@ -17,8 +17,8 @@ class CreateJobCertificatesTable extends Migration
             $table->id();
             $table->foreignId('job_id')->constrained('jobs')
                 ->onUpdate('cascade')->onDelete('cascade');
-            $table->string('name');
-            $table->string('image')->nullable();
+            $table->foreignId('certificate_id')->constrained('certificates')
+                ->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }

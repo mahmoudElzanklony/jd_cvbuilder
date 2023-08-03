@@ -8,6 +8,6 @@ class job_certificates extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['job_id','name','image'];
+    protected $fillable = ['job_id','certificated_id'];
 
 }

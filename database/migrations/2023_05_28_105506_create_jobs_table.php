@@ -25,11 +25,12 @@ class CreateJobsTable extends Migration
             $table->longText('en_desc');
             $table->string('contract_period');
             $table->tinyInteger('contract_renewable');
-            $table->string('YEARS_EXPERIENCE');
+            $table->string('years_experience');
             $table->float('min_salary');
             $table->float('max_salary');
-            $table->string('career_path');
-            $table->string('status')->default('a');
+            $table->string('ar_career_path');
+            $table->string('en_career_path');
+            $table->string('status');
             $table->timestamps();
             $table->softDeletes();
         });

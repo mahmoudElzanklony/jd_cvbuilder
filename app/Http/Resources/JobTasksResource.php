@@ -16,9 +16,9 @@ class JobTasksResource extends JsonResource
     {
         return [
             'id'=>$this->id,
-            'job_id'=>$this->job_id,
-            'info'=>$this->info,
-            'created_at'=>$this->created_at->format('Y m d, h:i A'),
+            'title'=>$this->{app()->getLocale().'_title'},
+            'description'=>$this->{app()->getLocale().'_desc'},
+            'created_at'=>$this->created_at != null ? $this->created_at->format('Y m d, h:i A') : '',
         ];
     }
 }

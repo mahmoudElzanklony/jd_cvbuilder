@@ -51,8 +51,6 @@ class usersFormRequest extends FormRequest
             'password'=>'nullable|min:7|max:191',
             'phone'=>'required|min:7',
             'address'=>'nullable|max:191',
-            'block'=>'required',
-            'auto_publish'=>'required',
             'image'=>'nullable|image|mimes:jpg,jpeg,png,gif',
         ];
     }
@@ -117,6 +115,8 @@ class usersFormRequest extends FormRequest
             return $this->login();
         }else if(str_contains($this->getRequestUri() , '/register')){
             return $this->register();
+        }else if(str_contains($this->getRequestUri() , '/users')){
+            return $this->update_admin();
         }else if(str_contains($this->getRequestUri() , '/profile/update-email-image')){
             return $this->update_email_image();
         }else if(str_contains($this->getRequestUri() , '/profile/update-password')){

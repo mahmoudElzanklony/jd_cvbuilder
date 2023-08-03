@@ -16,10 +16,11 @@ class JobWorkContextResource extends JsonResource
     {
         return [
             'id'=>$this->id,
-            'job_id'=>$this->job_id,
-            'work_id'=>$this->work_id,
-            'rank'=>$this->rank,
-            'created_at'=>$this->created_at->format('Y m d, h:i A'),
+            'title'=>$this->{app()->getLocale().'_title'},
+            'description'=>$this->{app()->getLocale().'_desc'},
+            'note'=>$this->note,
+           // 'rank'=>$this->rank,
+            'created_at'=>$this->created_at != null ? $this->created_at->format('Y m d, h:i A') : '',
         ];
     }
 }

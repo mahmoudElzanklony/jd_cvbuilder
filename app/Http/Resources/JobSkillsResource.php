@@ -15,12 +15,10 @@ class JobSkillsResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id'=>$this->id,
-            'job_id'=>$this->job_id,
-            'skill_id'=>$this->skill_id,
+            'skill'=>SkillsResource::make($this->whenLoaded('skill')),
             'importance'=>$this->importance,
             'mastery'=>$this->mastery,
-            'created_at'=>$this->created_at->format('Y m d, h:i A'),
+            'created_at'=>$this->created_at != null ? $this->created_at->format('Y m d, h:i A') : '',
         ];
     }
 }
