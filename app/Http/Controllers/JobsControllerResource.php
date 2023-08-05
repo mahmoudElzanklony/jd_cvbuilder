@@ -49,7 +49,7 @@ class JobsControllerResource extends Controller
         $data = jobs::query()
             ->with(['certificates','abilities','knowledge','educations','work_context','skills','tasks'])
             ->orderBy('id','DESC')
-            ->paginate(10);
+            ->paginate(25);
         return JobResource::collection($data);
     }
 
@@ -65,7 +65,7 @@ class JobsControllerResource extends Controller
                 DescFilter::class
             ])
             ->thenReturn()
-            ->paginate(8);
+            ->paginate(25);
         return JobResource::collection($output);
     }
 

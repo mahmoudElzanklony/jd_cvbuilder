@@ -25,10 +25,12 @@ Route::group(['middleware'=>'changeLang'],function (){
             'countries'=>CountriesController::class, // countries Resource
             'cities'=>CitiesController::class // cities Resource
         ]);
-        Route::group(['prefix'=>'/titledesc'],function(){
-            Route::post('/',[TitleDescriptionController::class,'all']);
-            Route::post('save',[TitleDescriptionController::class,'save']);
-        });
+
+    });
+
+    Route::group(['prefix'=>'/titledesc'],function(){
+        Route::post('/',[TitleDescriptionController::class,'all']);
+        Route::post('save',[TitleDescriptionController::class,'save']);
     });
 
     Route::group(['prefix'=>'/jobs'],function(){

@@ -38,7 +38,7 @@ class SkillsControllerResource extends Controller
                 EnDescFilter::class,
             ])
             ->thenReturn()
-            ->paginate(10);
+            ->paginate(25);
         return SkillsResource::collection($data);
     }
 

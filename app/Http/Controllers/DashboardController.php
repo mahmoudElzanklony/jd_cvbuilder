@@ -37,7 +37,7 @@ class DashboardController extends Controller
                 EndDateFilter::class
             ])
             ->thenReturn()
-            ->paginate(8);
+            ->paginate(25);
         return UserResource::collection($output);
     }
 
@@ -54,7 +54,7 @@ class DashboardController extends Controller
                 EndDateFilter::class
             ])
             ->thenReturn()
-            ->paginate(8);
+            ->paginate(25);
         return messages::success_output('',$output);
     }
 
@@ -80,7 +80,7 @@ class DashboardController extends Controller
                 EndDateFilter::class
             ])
             ->thenReturn()
-            ->paginate(8);
+            ->paginate(25);
         return TitleDescResource::collection($output);
     }
 
@@ -94,7 +94,7 @@ class DashboardController extends Controller
                 EndDateFilter::class
             ])
             ->thenReturn()
-            ->paginate(8);
+            ->paginate(25);
         return messages::success_output('',$output);
     }
 
