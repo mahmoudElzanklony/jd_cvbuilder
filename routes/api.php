@@ -35,6 +35,7 @@ Route::group(['middleware'=>'changeLang'],function (){
 
     Route::group(['prefix'=>'/jobs'],function(){
         Route::post('/names',[JobsControllerResource::class,'jobs_names']);
+        Route::post('/dash',[JobsControllerResource::class,'jobs_dash']);
     });
 
     Route::group(['prefix'=>'/dashboard','middleware'=>'CheckApiAuth'],function(){

@@ -3,16 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Actions\GetRoleAction;
-use App\Http\Actions\HandleMultiLangData;
-use App\Http\Controllers\Filters\ArDescFilter;
 use App\Http\Controllers\Filters\DescFilter;
 use App\Http\Controllers\Filters\NameFilter;
-use App\Http\Controllers\Filters\ArTitleFilter;
-use App\Http\Controllers\Filters\EndDateFilter;
-use App\Http\Controllers\Filters\EnDescFilter;
-use App\Http\Controllers\Filters\EnNameFilter;
-use App\Http\Controllers\Filters\EnTitleFilter;
-use App\Http\Controllers\Filters\StartDateFilter;
 use App\Http\Repositaries\JobRepobsitary;
 use App\Http\Requests\jobsFormRequest;
 use App\Http\Resources\JobResource;
@@ -67,6 +59,25 @@ class JobsControllerResource extends Controller
             ->thenReturn()
             ->paginate(25);
         return JobResource::collection($output);
+    }
+
+    public function jobs_dash(){
+        $data = jobs::query()
+            ->with(['parent'=>function($e){
+                return $e->select('id',app()->getLocale().'_name as name');
+            }])
+            ->orderBy('id','DESC');
+
+        $output = app(Pipeline::class)
+            ->send($data)
+            ->through([
+                NameFilter::class,
+                DescFilter::class
+            ])
+            ->thenReturn()
+            ->paginate(25);
+
+        return messages::success_output('',$output);
     }
 
     /**
@@ -129,10 +140,15 @@ class JobsControllerResource extends Controller
     {
         //
         $data = jobs::query()
-            ->with(['certificates','abilities','knowledge','educations','work_values','interests',
+            ->with(['certificates','parent'=>function($e){
+                $e->select('id',app()->getLocale().'_name as name');
+            },'abilities','knowledge','educations','work_values','interests',
                   'work_activities'
-                ,'work_context','job_skills.skill','tasks'])
+                ,'work_context','skills','job_skills.skill','tasks'])
             ->find($id);
+        if(request()->has('admin')){
+            return messages::success_output('',$data);
+        }
         //return $data;
         return JobResource::make($data);
     }

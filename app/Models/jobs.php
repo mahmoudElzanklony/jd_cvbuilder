@@ -18,6 +18,11 @@ class jobs extends Model
         ,'ar_desc','en_desc','contract_period'
         ,'contract_renewable','years_experience','min_salary','max_salary','ar_career_path','en_career_path'];
 
+
+    public function parent(){
+        return $this->belongsTo(jobs::class,'parent_id');
+    }
+
     public function certificates(){
         return $this->belongsToMany(certificates::class,job_certificates::class,'job_id',
             'certificate_id');
@@ -40,7 +45,7 @@ class jobs extends Model
 
 
     public function skills(){
-        return $this->belongsToMany(certificatesskills::class,job_skills::class,'job_id',
+        return $this->belongsToMany(skills::class,job_skills::class,'job_id',
             'skill_id');
     }
 
