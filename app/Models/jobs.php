@@ -70,7 +70,7 @@ class jobs extends Model
     }
 
     public function work_context(){
-        return $this->belongsToMany(work_context::class,job_work_context::class,'job_id',
+        return $this->belongsToMany(work_contexts::class,job_work_contexts::class,'job_id',
             'work_id');
     }
 

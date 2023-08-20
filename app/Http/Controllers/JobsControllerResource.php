@@ -21,7 +21,7 @@ use App\Models\job_work_values;
 use App\Models\jobs;
 use App\Models\job_certificates;
 use App\Models\job_educations;
-use App\Models\job_work_context;
+use App\Models\job_work_contexts;
 use App\Models\roles;
 use App\Models\work_activities;
 use Illuminate\Http\Request;
@@ -30,6 +30,11 @@ use Illuminate\Support\Facades\DB;
 
 class JobsControllerResource extends Controller
 {
+
+    public function __construct(){
+        $this->middleware('CheckApiAuth')->only('store');
+        $this->middleware('CheckApiAuth')->only('update');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -85,6 +90,17 @@ class JobsControllerResource extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function parents(){
+        $data = jobs::query()
+            ->select('id',app()->getLocale().'_name as name')
+            ->where('parent_id','=',0)
+            ->orWhere('parent_id','=',null)
+            ->orderBy('id','DESC')->get();
+
+        return messages::success_output('',$data);
+    }
+
     public function create()
     {
         //
@@ -105,28 +121,44 @@ class JobsControllerResource extends Controller
         });
         /*$job_obj = jobs::query()->find(10);
         return $job_obj->certificates()->sync([1]);*/
-        DB::beginTransaction();
+        //DB::beginTransaction();
         $job->save_job($job_data)
-            ->save_data_model($data['job_certificates'],job_certificates::class,'certificates')
-            ->save_data_model($data['job_abilities'],job_abilities::class,'abilities')
-            ->save_data_model($data['job_knowledage'],job_knowledage::class,'knowledge')
-            ->save_data_model($data['job_competencies'],job_competencies::class,'competencies')
-            ->save_data_model($data['job_educations'],job_educations::class,'educations')
-            ->save_data_model($data['job_work_context'],job_work_context::class,'work_context')
-            ->save_data_model($data['job_work_activities'],job_work_activities::class,'work_activities')
-            ->save_data_model($data['job_work_values'],job_work_values::class,'work_values')
-            ->save_data_model($data['job_tasks'],job_tasks::class,'tasks')
-            ->save_data_model($data['skills_jobs'],job_skills::class,'skills')
-            ->save_data_model($data['job_interests'],job_interests::class,'interests')
-            ->save_data_model($data['job_principle_contracts'],job_principle_contracts::class,'principle_contracts');
-        DB::commit();
-        return messages::success_output(trans('messages.operation_done_successfully'));
+            ->save_data_model($data['job_certificates'] ?? [],job_certificates::class,'certificates')
+            ->save_data_model($data['job_abilities'] ?? [],job_abilities::class,'abilities')
+            ->save_data_model($data['job_knowledge'] ?? [],job_knowledage::class,'knowledge')
+            ->save_data_model($data['job_competencies'] ?? [],job_competencies::class,'competencies')
+            ->save_data_model($data['job_educations'] ?? [],job_educations::class,'educations')
+            ->save_data_model($data['job_work_context'] ?? [],job_work_contexts::class,'work_context')
+            ->save_data_model($data['job_work_activities'] ?? [],job_work_activities::class,'work_activities')
+            ->save_data_model($data['job_work_values'] ?? [],job_work_values::class,'work_values')
+            ->save_data_model($data['job_tasks'] ?? [],job_tasks::class,'tasks')
+            ->save_data_model($data['job_skills'] ?? [],job_skills::class,'skills')
+            ->save_data_model($data['job_interests'] ?? [],job_interests::class,'interests')
+            ->save_data_model($data['job_principle_contracts'] ?? [],job_principle_contracts::class,'principle_contracts');
+        //DB::commit();
+        return messages::success_output(trans('messages.operation_done_successfully'),$job->get_job());
+    }
+
+    public function save_job_info_only(jobsFormRequest $formRequest)
+    {
+        //
+        $data = $formRequest->validated();
+        $data['user_id'] = auth()->id();
+        $job = new JobRepobsitary();
+        $job_data = array_filter($data, function($value) {
+            return !is_array($value);
+        });
+
+        DB::beginTransaction();
+        $job->save_job($job_data);
+        return JobResource::make($job->get_job());
     }
 
     public function store(jobsFormRequest $formRequest)
     {
         //
-        $data = $formRequest->validated();
+       $this->middleware('CheckApiAuth');
+       $data = $formRequest->validated();
        return $this->save_job_data($data);
     }
 
@@ -142,7 +174,7 @@ class JobsControllerResource extends Controller
         $data = jobs::query()
             ->with(['certificates','parent'=>function($e){
                 $e->select('id',app()->getLocale().'_name as name');
-            },'abilities','knowledge','educations','work_values','interests',
+            },'abilities','competencies','knowledge','educations','work_values','interests',
                   'work_activities'
                 ,'work_context','skills','job_skills.skill','tasks'])
             ->find($id);
