@@ -34,7 +34,7 @@ class jobs extends Model
     }
 
     public function knowledge(){
-         return $this->belongsToMany(knowledge::class,job_knowledage::class,'job_id',
+         return $this->belongsToMany(knowledge::class,job_knowledge::class,'job_id',
             'knowledge_id');
     }
 
@@ -69,7 +69,7 @@ class jobs extends Model
             'interest_id');
     }
 
-    public function work_context(){
+    public function work_contexts(){
         return $this->belongsToMany(work_contexts::class,job_work_contexts::class,'job_id',
             'work_id');
     }

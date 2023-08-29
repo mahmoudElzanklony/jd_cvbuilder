@@ -10,4 +10,8 @@ class job_work_contexts extends Model
     use HasFactory;
 
     protected $fillable = ['job_id','work_id','rank'];
+
+    public function job(){
+        return $this->belongsTo(jobs::class,'job_id');
+    }
 }

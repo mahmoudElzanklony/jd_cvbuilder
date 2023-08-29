@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Actions\GetRoleAction;
 use App\Http\Controllers\Filters\DescFilter;
 use App\Http\Controllers\Filters\NameFilter;
+use App\Http\Controllers\Filters\TagFilter;
 use App\Http\Repositaries\JobRepobsitary;
 use App\Http\Requests\jobsFormRequest;
 use App\Http\Resources\JobResource;
@@ -12,7 +13,7 @@ use App\Http\traits\messages;
 use App\Models\job_abilities;
 use App\Models\job_competencies;
 use App\Models\job_interests;
-use App\Models\job_knowledage;
+use App\Models\job_knowledge;
 use App\Models\job_principle_contracts;
 use App\Models\job_skills;
 use App\Models\job_tasks;
@@ -44,7 +45,7 @@ class JobsControllerResource extends Controller
     {
         //
         $data = jobs::query()
-            ->with(['certificates','abilities','knowledge','educations','work_context','skills','tasks'])
+            ->with(['certificates','abilities','knowledge','educations','work_contexts','skills','tasks'])
             ->orderBy('id','DESC')
             ->paginate(25);
         return JobResource::collection($data);
@@ -67,6 +68,7 @@ class JobsControllerResource extends Controller
     }
 
     public function jobs_dash(){
+
         $data = jobs::query()
             ->with(['parent'=>function($e){
                 return $e->select('id',app()->getLocale().'_name as name');
@@ -77,7 +79,8 @@ class JobsControllerResource extends Controller
             ->send($data)
             ->through([
                 NameFilter::class,
-                DescFilter::class
+                DescFilter::class,
+                TagFilter::class
             ])
             ->thenReturn()
             ->paginate(25);
@@ -121,21 +124,21 @@ class JobsControllerResource extends Controller
         });
         /*$job_obj = jobs::query()->find(10);
         return $job_obj->certificates()->sync([1]);*/
-        //DB::beginTransaction();
+        DB::beginTransaction();
         $job->save_job($job_data)
             ->save_data_model($data['job_certificates'] ?? [],job_certificates::class,'certificates')
             ->save_data_model($data['job_abilities'] ?? [],job_abilities::class,'abilities')
-            ->save_data_model($data['job_knowledge'] ?? [],job_knowledage::class,'knowledge')
+            ->save_data_model($data['job_knowledge'] ?? [],job_knowledge::class,'knowledge')
             ->save_data_model($data['job_competencies'] ?? [],job_competencies::class,'competencies')
             ->save_data_model($data['job_educations'] ?? [],job_educations::class,'educations')
-            ->save_data_model($data['job_work_context'] ?? [],job_work_contexts::class,'work_context')
+            ->save_data_model($data['job_work_contexts'] ?? [],job_work_contexts::class,'work_contexts')
             ->save_data_model($data['job_work_activities'] ?? [],job_work_activities::class,'work_activities')
             ->save_data_model($data['job_work_values'] ?? [],job_work_values::class,'work_values')
             ->save_data_model($data['job_tasks'] ?? [],job_tasks::class,'tasks')
             ->save_data_model($data['job_skills'] ?? [],job_skills::class,'skills')
             ->save_data_model($data['job_interests'] ?? [],job_interests::class,'interests')
             ->save_data_model($data['job_principle_contracts'] ?? [],job_principle_contracts::class,'principle_contracts');
-        //DB::commit();
+        DB::commit();
         return messages::success_output(trans('messages.operation_done_successfully'),$job->get_job());
     }
 
@@ -172,11 +175,11 @@ class JobsControllerResource extends Controller
     {
         //
         $data = jobs::query()
-            ->with(['certificates','parent'=>function($e){
+            ->with(['certificates','principle_contracts','parent'=>function($e){
                 $e->select('id',app()->getLocale().'_name as name');
             },'abilities','competencies','knowledge','educations','work_values','interests',
                   'work_activities'
-                ,'work_context','skills','job_skills.skill','tasks'])
+                ,'work_contexts','skills','job_skills.skill','tasks'])
             ->find($id);
         if(request()->has('admin')){
             return messages::success_output('',$data);

@@ -32,12 +32,13 @@ class JobResource extends JsonResource
           'abilities'=>JobAbilitiesResource::collection($this->whenLoaded('abilities')),
           'knowledge'=>JobKnowledgeResource::collection($this->whenLoaded('knowledge')),
           'educations'=>JobEducationResource::collection($this->whenLoaded('educations')),
-          'work_context'=>JobWorkContextResource::collection($this->whenLoaded('work_context')),
+          'work_contexts'=>JobWorkContextResource::collection($this->whenLoaded('work_contexts')),
           'skills'=> JobSkillsResource::collection($this->whenLoaded('job_skills')),
           'tasks'=>JobTasksResource::collection($this->whenLoaded('tasks')),
           'work_values'=>JobWorkValueResource::collection($this->whenLoaded('work_values')),
           'work_activities'=>JobWorkActivitiesResource::collection($this->whenLoaded('work_activities')),
           'interests'=>JobInterestsResource::collection($this->whenLoaded('interests')),
+          'principle_contracts'=>JobInterestsResource::collection($this->whenLoaded('principle_contracts')),
         ];
     }
 }
