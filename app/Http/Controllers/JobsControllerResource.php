@@ -60,7 +60,8 @@ class JobsControllerResource extends Controller
             ->send($data)
             ->through([
                 NameFilter::class,
-                DescFilter::class
+                DescFilter::class,
+                TagFilter::class
             ])
             ->thenReturn()
             ->paginate(25);
