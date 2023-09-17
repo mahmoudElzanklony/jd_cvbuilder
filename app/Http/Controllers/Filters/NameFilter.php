@@ -14,8 +14,6 @@ class NameFilter extends FilterRequest
         }
 
         return $next($request)
-            ->where('ar_name','LIKE', '%'.request()->input('name').'%')
-            ->orWhere('en_name','LIKE', '%'.request()->input('name').'%');
-
+            ->whereRaw('(ar_name LIKE "%'.request()->input('name').'%" OR en_name LIKE "%'.request()->input('name').'%")');
     }
 }

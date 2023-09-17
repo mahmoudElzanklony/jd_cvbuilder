@@ -47,7 +47,7 @@ class JobsControllerResource extends Controller
         $data = jobs::query()
             ->with(['certificates','abilities','knowledge','educations','work_contexts','skills','tasks'])
             ->orderBy('id','DESC')
-            ->paginate(25);
+            ->paginate(50);
         return JobResource::collection($data);
     }
 
@@ -64,7 +64,7 @@ class JobsControllerResource extends Controller
                 TagFilter::class
             ])
             ->thenReturn()
-            ->paginate(25);
+            ->paginate(50);
         return JobResource::collection($output);
     }
 

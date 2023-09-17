@@ -19,6 +19,7 @@ class CreateAbilitiesTable extends Migration
             $table->string('en_title');
             $table->string('ar_desc');
             $table->string('en_desc');
+            $table->string('code')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

@@ -12,8 +12,6 @@ class DescFilter extends FilterRequest
         }
 
         return $next($request)
-            ->where('ar_desc','LIKE', '%'.request()->input('desc').'%')
-            ->orWhere('en_desc','LIKE', '%'.request()->input('desc').'%');
-
+            ->whereRaw('(ar_desc LIKE  "%'.request()->input('desc').'%" OR en_desc LIKE "%'.request()->input('desc').'%")');
     }
 }

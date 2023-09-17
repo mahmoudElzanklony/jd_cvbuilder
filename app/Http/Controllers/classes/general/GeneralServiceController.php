@@ -4,11 +4,15 @@ namespace App\Http\Controllers\classes\general;
 
 use App\Http\Controllers\Controller;
 use App\Http\traits\messages;
+use App\Imports\ImportAbilities;
+use App\Jobs\ImportLargFileExcel;
+use App\Models\abilities;
 use App\Models\advertising_points_price;
 use App\Models\listings_info;
 use App\Services\notifications\pagiante_notifications;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class GeneralServiceController extends Controller
 {
@@ -27,6 +31,17 @@ class GeneralServiceController extends Controller
 
     }
 
+    public function upload(){
+
+        try {
+            $file = request()->file('file');
+            Excel::import(new ImportAbilities(), $file);
+
+            return true;
+        }catch (\Throwable $e){
+            return $e->getMessage();
+        }
+    }
 
     public function paginate_notification_data(){
         $id = request('id') ?? 0;

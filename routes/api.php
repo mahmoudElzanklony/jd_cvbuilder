@@ -12,11 +12,14 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\classes\general\GeneralServiceController;
 
+Route::get('/user',[AuthControllerApi::class,'user'])->middleware('CheckApiAuth');
+Route::post('/login',[AuthControllerApi::class,'login_api']);
 
 Route::group(['middleware'=>'changeLang'],function (){
     Route::post('/register',[AuthControllerApi::class,'register_post']);
-    Route::post('/login',[AuthControllerApi::class,'login_api']);
     Route::post('/logout',[AuthControllerApi::class,'logout_api']);
+    Route::post('/validate-user',[AuthControllerApi::class,'validate_user']);
+
 
     Route::group(['middleware'=>'guest'],function () {
         Route::resources([
@@ -64,6 +67,9 @@ Route::group(['middleware'=>'changeLang'],function (){
 
 
     Route::post('/deleteitem',[GeneralServiceController::class,'delete_item']);
+
+
+    Route::post('/upload-excel',[GeneralServiceController::class,'upload']);
 
 
 

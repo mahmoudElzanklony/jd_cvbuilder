@@ -16,7 +16,7 @@ class TagFilter extends FilterRequest
                 foreach($values as $v){
                     $v = json_decode($v,true);
                     $result = $result->whereHas($inputName,function ($e) use ($v){
-                        $e->where('ar_title','=',$v['value']);
+                        $e->whereRaw('(ar_title ="'.$v['value'].'" OR en_title = "'.$v['value'].'")');
 
                     });
 

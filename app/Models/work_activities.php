@@ -10,5 +10,5 @@ class work_activities extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $fillable = ['title','description'];
+    protected $fillable = ['ar_title','en_title','ar_desc','en_desc','code'];
 }

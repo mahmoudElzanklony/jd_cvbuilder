@@ -30,7 +30,7 @@ class changeLang
         }else{
             app()->setLocale('ar');
         }
-        if(!(request()->hasHeader('api_key') && request()->header('api_key') == env('api_key'))){
+        if(!(request()->hasHeader('api_key') && request()->header('api_key') == env('api_key','skillar2023'))){
             return messages::error_output('api key is missing !!');
         }
         return $next($request);

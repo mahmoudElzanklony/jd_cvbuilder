@@ -9,5 +9,5 @@ class work_contexts extends Model
 {
     use HasFactory;
     use SoftDeletes;
-    protected $fillable = ['ar_title','en_title','ar_desc','en_desc','note'];
+    protected $fillable = ['ar_title','en_title','ar_desc','en_desc','note','code'];
 }

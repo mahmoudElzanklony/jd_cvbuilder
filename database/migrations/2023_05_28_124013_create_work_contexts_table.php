@@ -20,6 +20,7 @@ class CreateWorkContextsTable extends Migration
             $table->longText('ar_desc');
             $table->longText('en_desc');
             $table->text('note');
+            $table->string('code')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

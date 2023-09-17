@@ -16,7 +16,7 @@ class jobs extends Model
 
     protected $fillable = ['user_id','ar_name','en_name','parent_id','career_ladder'
         ,'ar_desc','en_desc','contract_period'
-        ,'contract_renewable','years_experience','min_salary','max_salary','ar_career_path','en_career_path'];
+        ,'contract_renewable','years_experience','min_salary','max_salary','ar_career_path','en_career_path','code'];
 
 
     public function parent(){

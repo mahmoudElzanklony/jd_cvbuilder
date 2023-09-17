@@ -19,6 +19,7 @@ class CreateWorkActivitiesTable extends Migration
             $table->string('en_title');
             $table->text('ar_desc');
             $table->text('en_desc');
+            $table->string('code')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

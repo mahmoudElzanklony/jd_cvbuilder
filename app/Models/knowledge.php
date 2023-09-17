@@ -10,5 +10,7 @@ class knowledge extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $fillable = ['title','description'];
+    protected $table = 'knowledge';
+
+    protected $fillable = ['ar_title','en_title','ar_desc','en_desc','code'];
 }

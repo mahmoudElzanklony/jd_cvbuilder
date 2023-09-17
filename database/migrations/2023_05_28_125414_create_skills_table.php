@@ -21,6 +21,7 @@ class CreateSkillsTable extends Migration
             $table->text('ar_desc');
             $table->text('en_desc');
             $table->text('note')->nullable();
+            $table->text('code')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

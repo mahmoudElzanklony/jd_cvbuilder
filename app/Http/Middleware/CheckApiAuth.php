@@ -19,7 +19,7 @@ class CheckApiAuth extends BaseMiddleware
     {
         $token = $request->header('token');
         $request->headers->set('token',(string)$token,true);
-        $request->headers->set('Authorization','Bearer '.$token,true);
+        $request->headers->set('Authorization',$token,true);
         try {
             $user = $this->auth->parseToken()->authenticate($request);
         }catch (\Exception $e){
