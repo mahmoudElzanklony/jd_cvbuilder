@@ -35,6 +35,7 @@ Route::group(['middleware'=>'changeLang'],function (){
         Route::post('/',[TitleDescriptionController::class,'all']);
         Route::post('save',[TitleDescriptionController::class,'save']);
     });
+    Route::get('/jobs-ids',[JobsControllerResource::class,'ids']);
 
     Route::group(['prefix'=>'/jobs'],function(){
         Route::post('/names',[JobsControllerResource::class,'jobs_names']);

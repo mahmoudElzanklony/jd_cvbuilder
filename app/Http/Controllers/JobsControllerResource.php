@@ -68,6 +68,10 @@ class JobsControllerResource extends Controller
         return JobResource::collection($output);
     }
 
+    public function ids(){
+        return jobs::query()->select('id')->get();
+    }
+
     public function jobs_dash(){
 
         $data = jobs::query()
