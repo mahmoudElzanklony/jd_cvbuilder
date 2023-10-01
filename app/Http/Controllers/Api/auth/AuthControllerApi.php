@@ -26,7 +26,7 @@ class AuthControllerApi extends AuthServicesClass
             $credential = request()->only(['email', 'password']);
             $token = auth('api')->attempt($credential);
             if(!$token){
-                return response()->json('error in email or password',401);
+                //return response()->json('error in email or password',401);
                 return messages::error_output(trans('errors.unauthenticated'));
             }else {
                 $user = auth('api')->user();
