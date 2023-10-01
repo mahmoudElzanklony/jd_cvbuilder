@@ -15,6 +15,8 @@ use App\Http\Controllers\classes\general\GeneralServiceController;
 Route::get('/user',[AuthControllerApi::class,'user'])->middleware('CheckApiAuth');
 Route::post('/login',[AuthControllerApi::class,'login_api']);
 
+
+
 Route::group(['middleware'=>'changeLang'],function (){
     Route::post('/register',[AuthControllerApi::class,'register_post']);
     Route::post('/logout',[AuthControllerApi::class,'logout_api']);

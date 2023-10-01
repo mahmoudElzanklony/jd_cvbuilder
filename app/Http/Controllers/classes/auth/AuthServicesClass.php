@@ -17,7 +17,10 @@ class AuthServicesClass extends Controller
     //
     // post
     public function register_post(usersFormRequest $request){
-        return register_service::register_process(request(),$request->validated());
+        $data = $request->validated();
+        request()->query->add(['type'=>'client','register_from'=>request('register_from') ?? 'app']);
+
+        return register_service::register_process(request(),$data);
     }
 
     // post
