@@ -18,30 +18,39 @@ class AuthControllerApi extends AuthServicesClass
 {
     use messages;
     public function login_api(){
-        $data = Validator::make(request()->all(),[
-            'email'=>'required',
-            'password'=>'required',
-        ]);
+        if(request()->filled('serial_number')){
+            $user = User::query()->where('serial_number','=',request('serial_number'))->first();
+            $token = auth('api')->login($user);
+            $user = auth('api')->user();
+            $user['token'] =  $token;
+            $user['role'] = roles::query()->find($user->role_id);
+            return $user;
+        }else {
+            $data = Validator::make(request()->all(), [
+                'email' => 'required',
+                'password' => 'required',
+            ]);
 
-        if(sizeof($data->errors()) == 0) {
+            if (sizeof($data->errors()) == 0) {
 
-            $credential = request()->only(['email', 'password']);
-            $token = auth('api')->attempt($credential);
-            if(!$token){
-                //return response()->json(trans('errors.unauthenticated'),401);
-                return messages::error_output(trans('errors.unauthenticated'));
-            }else {
-                $user = auth('api')->user();
-                $user['token'] =  $token;
-                $user['role'] = roles::query()->find($user->role_id);
-                return [
-                    'user'=>$user,
-                    'token'=>$token
-                ];
+                $credential = request()->only(['email', 'password']);
+                $token = auth('api')->attempt($credential);
+                if (!$token) {
+                    //return response()->json(trans('errors.unauthenticated'),401);
+                    return messages::error_output(trans('errors.unauthenticated'));
+                } else {
+                    $user = auth('api')->user();
+                    $user['token'] = $token;
+                    $user['role'] = roles::query()->find($user->role_id);
+                    return [
+                        'user' => $user,
+                        'token' => $token
+                    ];
+                }
+            } else {
+                return response()->json($data->errors(), 401);
+                // return messages::error_output($data->errors());
             }
-        }else{
-            return response()->json($data->errors(),401);
-           // return messages::error_output($data->errors());
         }
     }
 
