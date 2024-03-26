@@ -7,7 +7,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\usersFormRequest;
 use App\Http\traits\messages;
 use App\Models\roles;
+use App\Models\User;
 use App\Services\auth\register_service;
+use App\Services\mail\send_email;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -75,9 +77,35 @@ class AuthControllerApi extends AuthServicesClass
 
     }
 
+    public function check_email()
+    {
+        $user = User::query()->where('email','=',request('email'))->first();
+        if($user == null){
+            return messages::errors(trans('errors.not_found_user'));
+        }else{
+            send_email::send(trans('keywords.reset_password_title'),trans('keywords.reset_password_message'),
+                env('root_email_url').'/auth/new_password?id='.$user->id.'&serial_number='.$user->serial_number,trans('keywords.click_here'),$user->email);
+            return messages::success_output(trans('messages.sent_successfully'));
+        }
+    }
+
     public function user(){
         $user = auth()->user();
         $user['role'] = roles::query()->find($user->role_id);
         return $user;
     }
+
+    public function user_by_activation_code(){
+        if(request()->has('serial_number') && request()->has('id')){
+            $user = User::query()->where([
+                'serial_number'=>request('serial_number'),
+                'id'=>request('id'),
+            ])->first();
+            if($user != null){
+                return messages::success_output('');
+            }
+            return messages::error_output('');
+        }
+    }
+
 }
