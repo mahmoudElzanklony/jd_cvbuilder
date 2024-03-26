@@ -34,6 +34,12 @@ return [
     'ar_career_path'=>'Career path in arabic',
     'en_career_path'=>'Career path in english',
     // ----------------------end en jobs - ---------------------
+    // ----------------------start of templates - ---------------------
+    'reset_password_title'=>'Reset your password at skillar',
+    'reset_password_message'=>'You can make new password for your account by clicking to next link',
+    'click_here'=>'Click here'
+
+    // ----------------------end of templates - ---------------------
 
 
 ];
