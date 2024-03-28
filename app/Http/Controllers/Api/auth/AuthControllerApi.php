@@ -90,7 +90,7 @@ class AuthControllerApi extends AuthServicesClass
     {
         $user = User::query()->where('email','=',request('email'))->first();
         if($user == null){
-            return messages::errors(trans('errors.not_found_user'));
+            return messages::error_output(trans('errors.not_found_user'));
         }else{
             send_email::send(trans('keywords.reset_password_title'),trans('keywords.reset_password_message'),
                 env('root_email_url').'/auth/new_password?id='.$user->id.'&serial_number='.$user->serial_number,trans('keywords.click_here'),$user->email);

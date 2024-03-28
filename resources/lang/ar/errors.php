@@ -15,4 +15,5 @@ return [
     'not_completed'=>'غير مكتملة',
     'there_is_no_data_to_preview'=>'لا يوجد بيانات لعرضها',
     'ops_something_wrong'=>'هناك شئ خاطئ في هذا الطلب',
+
 ];
