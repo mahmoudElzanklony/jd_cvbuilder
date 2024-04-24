@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Actions\GetRoleAction;
 use App\Http\Controllers\Filters\DescFilter;
+use App\Http\Controllers\Filters\IdFiltter;
 use App\Http\Controllers\Filters\NameFilter;
 use App\Http\Controllers\Filters\TagFilter;
 use App\Http\Repositaries\JobRepobsitary;
@@ -59,6 +60,7 @@ class JobsControllerResource extends Controller
         $output = app(Pipeline::class)
             ->send($data)
             ->through([
+                IdFiltter::class,
                 NameFilter::class,
                 DescFilter::class,
                 TagFilter::class
